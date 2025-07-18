@@ -1,1 +1,35 @@
+<!-- expenses.html -->
+<h1>Daily Expenses</h1>
+<form id="expense-form">
+  <input type="text" id="desc" placeholder="Description" required />
+  <input type="number" id="exp-amount" placeholder="Amount" required />
+  <button type="submit">Add</button>
+</form>
+<div id="expense-list"></div>
+
+<script src="js/data.js"></script>
+<script>
+  const form = document.getElementById("expense-form");
+  const list = document.getElementById("expense-list");
+
+  form.onsubmit = e => {
+    e.preventDefault();
+    expenses.push({
+      id: Date.now(),
+      amount: parseFloat(document.getElementById("exp-amount").value),
+      description: document.getElementById("desc").value,
+      date: new Date().toISOString().split('T')[0]
+    });
+    form.reset();
+    render();
+  };
+
+  function render() {
+    list.innerHTML = expenses.map(e =>
+      `<div>${e.date} - ${e.description}: ₹${e.amount}</div>`
+    ).join('');
+  }
+
+  render();
+</script>
 
