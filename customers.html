@@ -1,1 +1,21 @@
+<!-- customers.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Customers</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <h1>Customers</h1>
+  <div id="customer-list"></div>
+
+  <script src="js/data.js"></script>
+  <script>
+    const listEl = document.getElementById("customer-list");
+    listEl.innerHTML = customers.map(c => 
+      `<div>${c.name} - Pending: ₹${c.pending}</div>`
+    ).join('');
+  </script>
+</body>
+</html>
 
