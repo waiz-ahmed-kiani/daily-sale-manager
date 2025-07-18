@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Daily Sale Manager</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h1>🧾 Daily Sale Management</h1>
+
+  <h1>🧾 Daily Sale Management Dashboard</h1>
 
   <nav class="menu">
     <a href="customers.html">👤 Customers</a>
@@ -14,9 +15,50 @@
     <a href="pending-payments.html">🕒 Pending Payments</a>
     <a href="expenses.html">🧾 Daily Expenses</a>
     <a href="sale-record.html">📊 Sale Records</a>
+    <button onclick="downloadDailyReport()">📄 Download Today’s Report</button>
   </nav>
 
-  <p>Welcome! Use the menu above to manage your daily business activities.</p>
+  <p>Welcome! Use the menu above to manage customers, track sales, log expenses, and download reports.</p>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+  <script>
+    function downloadDailyReport() {
+      const today = new Date().toISOString().split('T')[0];
+
+      let reportHTML = `
+        <h2>Daily Report - ${today}</h2>
+        <h3>Sales</h3>
+        <ul>
+          ${sales.filter(s => s.date === today).map(s => {
+            const c = customers.find(c => c.id === s.customerId);
+            return `<li>${c.name}: ₹${s.amount} (${s.isCredit ? 'Credit' : 'Cash'})</li>`;
+          }).join('')}
+        </ul>
+
+        <h3>Payments</h3>
+        <ul>
+          ${payments.filter(p => p.date === today).map(p => {
+            const c = customers.find(c => c.id === p.customerId);
+            return `<li>${c.name}: Paid ₹${p.amount}</li>`;
+          }).join('')}
+        </ul>
+
+        <h3>Expenses</h3>
+        <ul>
+          ${expenses.filter(e => e.date === today).map(e =>
+            `<li>${e.description}: ₹${e.amount}</li>`
+          ).join('')}
+        </ul>
+      `;
+
+      const element = document.createElement("div");
+      element.innerHTML = reportHTML;
+      html2pdf().from(element).save(`Daily-Report-${today}.pdf`);
+    }
+  </script>
+
 </body>
 </html>
-
