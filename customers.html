@@ -6,16 +6,37 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <h1>Customers</h1>
-  <div id="customer-list"></div>
+  <h1>👤 Customers</h1>
 
-  <script src="js/data.js"></script>
-  <script>
-    const listEl = document.getElementById("customer-list");
-    listEl.innerHTML = customers.map(c => 
-      `<div>${c.name} - Pending: ₹${c.pending}</div>`
+<form id="addCustomerForm">
+  <input type="text" id="newCustomerName" placeholder="Enter new customer name" required>
+  <button type="submit">Add Customer</button>
+</form>
+
+<ul id="customerList" class="customer-list"></ul>
+
+<script src="js/data.js"></script>
+<script>
+  const list = document.getElementById("customerList");
+
+  function renderCustomers() {
+    list.innerHTML = customers.map(c =>
+      `<li class="customer-item">${c.name} — Pending: ₹${c.pending}</li>`
     ).join('');
-  </script>
+  }
+
+  renderCustomers();
+
+  document.getElementById("addCustomerForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const name = document.getElementById("newCustomerName").value.trim();
+    if (name) {
+      addCustomer(name);
+      renderCustomers();
+      this.reset();
+    }
+  });
+</script>
 </body>
 </html>
 
