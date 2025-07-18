@@ -1,1 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sale Record</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <h1>Daily Sale Record</h1>
+
+  <div class="filters">
+    <input type="date" id="filterDate" />
+    
+    <select id="filterCustomer">
+      <option value="">All Customers</option>
+    </select>
+
+    <select id="filterType">
+      <option value="">All</option>
+      <option value="cash">Cash</option>
+      <option value="credit">Credit</option>
+    </select>
+
+    <button onclick="applyFilters()">Filter</button>
+    <button onclick="resetFilters()">Reset</button>
+  </div>
+
+  <div id="saleList" class="sale-list"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
 
