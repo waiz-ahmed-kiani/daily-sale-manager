@@ -1,11 +1,20 @@
 // js/data.js
+
 let customers = [
-  { id: 1, name: "John Doe", pending: 500 },
-  { id: 2, name: "Jane Smith", pending: 0 }
+  { id: 0, name: "Walk-in Customer", pending: 0 },
 ];
 
-let sales = []; // { id, customerId, amount, date, isCredit }
+let sales = [
+];
 
-let payments = []; // { id, customerId, amount, date }
+let payments = [
+];
 
-let expenses = []; // { id, amount, description, date }
+let expenses = [
+];
+
+function addCustomer(name) {
+  const newId = customers.length ? Math.max(...customers.map(c => c.id)) + 1 : 1;
+  customers.push({ id: newId, name: name, pending: 0 });
+  return newId;
+}
