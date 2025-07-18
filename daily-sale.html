@@ -1,18 +1,24 @@
-<!-- daily-sale.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>Daily Sale</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <h1>Daily Sale</h1>
+
+  <h1>💰 Daily Sale</h1>
+
   <form id="sale-form">
-    <select id="customer">
-      <option value="">Select Customer</option>
+    <label for="customer">Customer:</label>
+    <select id="customer" required>
+      <!-- Customer options will be populated via JS -->
     </select>
-    <input type="number" id="amount" placeholder="Amount" required />
+
+    <input type="number" id="amount" placeholder="Enter amount" required min="1" />
+
     <label><input type="checkbox" id="isCredit" /> Credit</label>
+
     <button type="submit">Add Sale</button>
   </form>
 
@@ -21,29 +27,53 @@
     const customerSelect = document.getElementById("customer");
     const saleForm = document.getElementById("sale-form");
 
-    customers.forEach(c => {
-      customerSelect.innerHTML += `<option value="${c.id}">${c.name}</option>`;
-    });
+    // Populate customer dropdown, default is Walk-in (id 0)
+    function populateCustomerOptions() {
+      customerSelect.innerHTML = "";
+      customers.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.id;
+        opt.textContent = c.name;
+        customerSelect.appendChild(opt);
+      });
+    }
+
+    populateCustomerOptions();
 
     saleForm.onsubmit = (e) => {
       e.preventDefault();
+
       const id = Date.now();
       const customerId = parseInt(customerSelect.value);
       const amount = parseFloat(document.getElementById("amount").value);
       const isCredit = document.getElementById("isCredit").checked;
-      const date = new Date().toISOString().split('T')[0];
+      const date = new Date().toISOString().split("T")[0];
+
+      // Validate
+      if (isNaN(customerId)) {
+        alert("Please select a customer.");
+        return;
+      }
+
+      if (isNaN(amount) || amount <= 0) {
+        alert("Please enter a valid amount.");
+        return;
+      }
 
       sales.push({ id, customerId, amount, date, isCredit });
 
+      // If credit, update customer's pending
       if (isCredit) {
         const customer = customers.find(c => c.id === customerId);
-        customer.pending += amount;
+        if (customer) {
+          customer.pending += amount;
+        }
       }
 
-      alert("Sale added!");
+      alert("Sale added successfully!");
       saleForm.reset();
+      customerSelect.selectedIndex = 0; // reset to Walk-in
     };
   </script>
 </body>
 </html>
-
