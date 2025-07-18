@@ -1,1 +1,49 @@
+<!-- daily-sale.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Daily Sale</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <h1>Daily Sale</h1>
+  <form id="sale-form">
+    <select id="customer">
+      <option value="">Select Customer</option>
+    </select>
+    <input type="number" id="amount" placeholder="Amount" required />
+    <label><input type="checkbox" id="isCredit" /> Credit</label>
+    <button type="submit">Add Sale</button>
+  </form>
+
+  <script src="js/data.js"></script>
+  <script>
+    const customerSelect = document.getElementById("customer");
+    const saleForm = document.getElementById("sale-form");
+
+    customers.forEach(c => {
+      customerSelect.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+    });
+
+    saleForm.onsubmit = (e) => {
+      e.preventDefault();
+      const id = Date.now();
+      const customerId = parseInt(customerSelect.value);
+      const amount = parseFloat(document.getElementById("amount").value);
+      const isCredit = document.getElementById("isCredit").checked;
+      const date = new Date().toISOString().split('T')[0];
+
+      sales.push({ id, customerId, amount, date, isCredit });
+
+      if (isCredit) {
+        const customer = customers.find(c => c.id === customerId);
+        customer.pending += amount;
+      }
+
+      alert("Sale added!");
+      saleForm.reset();
+    };
+  </script>
+</body>
+</html>
 
