@@ -1,1 +1,65 @@
+<!-- pending-payments.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pending Payments</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <h1>Pending Payments</h1>
+  <div id="pending-list"></div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden">
+    <select id="payCustomer">
+      <option value="">Select Customer</option>
+    </select>
+    <input type="number" id="payAmount" placeholder="Amount" />
+    <button onclick="pay()">Pay</button>
+    <button onclick="closeModal()">Cancel</button>
+  </div>
+
+  <button onclick="openModal()">Make Payment</button>
+
+  <script src="js/data.js"></script>
+  <script>
+    const pendingList = document.getElementById("pending-list");
+    const modal = document.getElementById("modal");
+    const payCustomer = document.getElementById("payCustomer");
+
+    function renderList() {
+      pendingList.innerHTML = customers.map(c =>
+        `<div>${c.name} - ₹${c.pending}</div>`
+      ).join('');
+    }
+
+    function openModal() {
+      modal.classList.remove("hidden");
+      payCustomer.innerHTML = '<option value="">Select</option>' +
+        customers.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    }
+
+    function closeModal() {
+      modal.classList.add("hidden");
+    }
+
+    function pay() {
+      const customerId = parseInt(payCustomer.value);
+      const amount = parseFloat(document.getElementById("payAmount").value);
+      const customer = customers.find(c => c.id === customerId);
+      customer.pending -= amount;
+      payments.push({ id: Date.now(), customerId, amount, date: new Date().toISOString().split('T')[0] });
+      closeModal();
+      renderList();
+    }
+
+    renderList();
+  </script>
+
+  <style>
+    .hidden { display: none; }
+    .modal { background: #eee; padding: 1em; border: 1px solid #ccc; }
+  </style>
+</body>
+</html>
 
