@@ -1,1 +1,106 @@
+/* Global Styles */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Forms */
+form {
+  margin-bottom: 20px;
+}
+
+input, select, button, textarea {
+  padding: 8px 12px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #007bff;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Filters Section */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Sales and Lists */
+.sale-list, .expense-list, .customer-list, .pending-list {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.sale-item, .expense-item, .customer-item, .pending-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.sale-item:last-child,
+.expense-item:last-child,
+.customer-item:last-child,
+.pending-item:last-child {
+  border-bottom: none;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal button {
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .filters {
+    flex-direction: column;
+  }
+
+  body {
+    padding: 15px;
+  }
+}
 
